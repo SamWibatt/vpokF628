@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>One Chip Poker Random Number Generator</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="hardware.html">Hardware</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="deal.html">Dealing</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<H1>Random Number Generator</H1>
+	<P>Of necessity, the random number generator in One Chip Poker is
+	very simple. It's the old standard Linear Congruential Random Number
+	Generator (LCRNG) described in 
+	<a href="http://www.library.cornell.edu/nr/bookcpdf.html">Numerical Recipes in C</a>, 
+	and which can be found all over the place online. There's a good brief discussion
+	of it <A HREF="http://en.wikipedia.org/wiki/Linear_congruential_generator">at Wikipedia.</A></P>
+</td>
+<td class="sidebar">
+<center>
+<a href="index.html">
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+<p>One Chip Video Poker Project</p>
+</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<P>Basically, how it works is like this: 
+	</P>
+	<OL>
+		<LI><P STYLE="margin-bottom: 0in">Start with a 32-bit value, n. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in">Every time you want a new &quot;random&quot;
+		number, set<br>
+		n = (1664525 * n) + 1013904223.<br>
+		Because we're keeping it in a 32-bit
+		container, there's an implicit modulo 2<sup>32</sup> you get &ldquo;for free&rdquo;. 
+		</P>
+		<LI><P>now n is your new random number. 
+		</P>
+	</OL>
+	<P>In general, the higher-order bits of LCRNG samples are more random
+	than the low-order bits, so I use the high-order bits in the
+	deal/draw code.</P>
+</td>
+<td class="sidebar">
+	<P>LCRNGs are a good, old-fashioned technique that is suitable for
+	tiny systems like PICs but not for any flashy modern applications
+	like cryptography. Nearly every mention of them online has a
+	&ldquo;no cryptography&rdquo; disclaimer, in varying degrees of disdain. 
+	Here I'll add my own: Don't try to use this RNG for
+	cryptography.</P></td>
+</tr>
+<tr>
+<td class="content">
+	<h2>Stirring</h2>
+	<P>One big drawback with LCRNGs is that they are just a repeating
+	series of numbers which look sort of random - even if it is a long series, more than 4 billion numbers in this case. There's a good old
+	video-game-biz trick for helping out with this, which is to throw in
+	a real-world randomizing factor: user response time. How does that
+	work? Well, in human terms, this LCRNG implementation is pretty fast.
+	I estimate that it
+	takes about 400 instruction cycles to run. If you're
+	using the internal 16F628 oscillator at 4MHz (1MHz instruction
+	cycle), it takes about 0.4 milliseconds per iteration. Human reaction
+	times in button pressing tend to be in the tenth-of-a-second range,
+	so even if a user is twiddling a button as fast as they can this
+	thing can step through a whole bunch of iterations - even calling it 50 times a second is fast enough, which
+	is the same rate as the button-debouncing interval used in One Chip Poker's button input routine. If you just keep
+	calling the RNG while waiting for user button presses, it &quot;stirs&quot;
+	the RNG nicely by more randomly sampling the LCRNG sequence.</P>
+	<P>However: Looking ahead to what we'll really have in the game, it's going to go something like this.</P>
+	<ul>
+	  <li>Player turns on the power.</li>
+	  <li>Splash screen shows up, inviting the user to press the Deal button to start. 
+		  This is so we can do an initial stir.</li>
+	  <li>Player has seen this before so immediately mashes the Deal button to get rolling.</li>
+	  <li>Likewise with the bet screen.</li>
+	</ul>
+	<P>So, that didn't give us much of a chance to stir; if the seed is hardcoded to start at the same
+	value on reset, and the RNG is stirred once per debouncing interval, chances are that fewer than ten
+	stirs will have happened - resulting in only about ten initial hands. We can't stir and sample the
+	buttons much faster or the debouncing might not work. Calling the LCRNG a fixed but larger number of times
+	per button sampling period doesn't help either because there will still only be about ten different RNG states
+	once the game starts.</P>
+	<P>One solution is to avoid having the same seed every time at startup. Thus, it can't be hardcoded; it has
+	to be stored somewhere.
+	Happily, the PIC 16F628 has a built-in mechanism for just such an application - the Data EEPROM.
+	Like the program Flash-ROM, the Data EEPROM is memory that will retain its contents even while the circuit's power is
+	off. Think of it as a 128-byte hard drive.</P>
+	<P>So, all we have to do is write the current seed into Data EEPROM once in a while, and read it out of there on
+	powerup.</P>
+</td>
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	&nbsp;
+</tr>
+<!-- but if I do multiple rows, I can line sidebar stuff up with content! -->
+<tr>
+<td class="content">  <!-- a second round of content -->
+	<h2>LCRNG Unit Test</h2>
+		<P>Here's a screenshot of a little test that shows the first 8
+		numbers output by the PIC version, starting with the seed 0x1337D00D,
+		and the expected values as printed out by a little PC console program
+		implementing the LCRNG:</P>
+	<TABLE WIDTH=100% CELLPADDING=4 CELLSPACING=3>
+		<COL WIDTH=50%>
+		<COL WIDTH=50%>
+		<TR VALIGN=TOP>
+			<TD WIDTH=50%>
+				<P><IMG SRC="images/rngtest-small.jpg" NAME="Graphic1" ALT="8 LCRNG numbers" title="8 LCRNG numbers" BORDER=0>
+				</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P><IMG SRC="images/CLCRNG.png" NAME="Graphic2" ALT="Actual command prompt screenshot!" title="Actual command prompt screenshot!" BORDER=0>
+				</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<p>Pressing a button advances to the next 8 numbers, which can be compared to the next 8 from the PC, for as long as it takes
+	to convince you that the PIC version is working.</p>
+	<P>	
+</td>
+<td class="sidebar">  <!-- and its sidekick -->
+	&nbsp;
+</td>
+</tr>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="hardware.html">Hardware</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="deal.html">Dealing</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

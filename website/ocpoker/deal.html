@@ -1,0 +1,593 @@
+<html>
+<head>
+<title>One Chip Video Poker Dealing</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="lcrng.html">Random Numbers</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="draw.html">Drawing</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<H1>Dealing</H1>
+	<P>Card dealing is a task commonly addressed online; it's a good
+	beginner-level programming assignment, not to mention the cornerstone
+	of all card games.</P>
+	<P>There are many approaches to card dealing. The one used in One
+	Chip Video Poker is not a very elegant one - I chose it because it's
+	suitable for use where code and data space are at an extreme premium,
+	and because video poker has a couple of properties that accomodate
+	it.</P>
+</td>
+<td class="sidebar">
+	<center>
+	<a href="index.html">
+	<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+	<p>One Chip Video Poker Project</p>
+	</a>
+	</center>
+</td>
+</tr>
+<td class="content">
+	<H2>Card Representation</H2>
+	<P>Cards are easily represented in a single byte each &ndash; the
+	intuitive way to do it is just use the numbers from 0 to 51.
+	Intuitive for assembly or C programmers, anyway, who like to think of
+	numbering things starting at zero.</P>
+	<P>One very happy property of cards is that there are four suits, and
+	four is one of those useful powers of two. 
+	</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<COL WIDTH=32*>
+		<TR VALIGN=TOP style="background-color:#c0c0c0">
+			<TD >
+				<P ALIGN=CENTER><B>Bit 7</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 6</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 5</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 4</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 3</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 2</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 1</B></P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER><B>Bit 0</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP style="background-color:white">
+			<TD >
+				<P ALIGN=CENTER>&mdash;</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>&mdash;</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Rank Bit 3</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Rank Bit 2</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Rank Bit 1</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Rank Bit 0</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Suit MSB</P>
+			</TD>
+			<TD >
+				<P ALIGN=CENTER>Suit LSB</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P>If you shift the suit bits off, you're effectively dividing by
+	four. From 0..51, dividing by four &ndash; and ignoring any decimal
+	remainder &ndash; gets you a number from 0 to 12. Handily enough,
+	those correspond to the thirteen ranks.</P>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">
+	<P>Ranks:</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<COL WIDTH=20*>
+		<TR VALIGN=BOTTOM style="background-color:#c0c0c0">
+			<TD WIDTH=8% SDVAL="0" SDNUM="1033;">
+				<P ALIGN=CENTER>0</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="1" SDNUM="1033;">
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="2" SDNUM="1033;">
+				<P ALIGN=CENTER>2</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="3" SDNUM="1033;">
+				<P ALIGN=CENTER>3</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="4" SDNUM="1033;">
+				<P ALIGN=CENTER>4</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="5" SDNUM="1033;">
+				<P ALIGN=CENTER>5</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="6" SDNUM="1033;">
+				<P ALIGN=CENTER>6</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="7" SDNUM="1033;">
+				<P ALIGN=CENTER>7</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="8" SDNUM="1033;">
+				<P ALIGN=CENTER>8</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="9" SDNUM="1033;">
+				<P ALIGN=CENTER>9</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="10" SDNUM="1033;">
+				<P ALIGN=CENTER>10</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="11" SDNUM="1033;">
+				<P ALIGN=CENTER>11</P>
+			</TD>
+			<TD WIDTH=8% SDVAL="12" SDNUM="1033;">
+				<P ALIGN=CENTER>12</P>
+			</TD>
+		</TR>
+		<TR style="background-color:white">
+			<TD WIDTH=8% VALIGN=TOP>
+				<P ALIGN=CENTER>Ace</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="2" SDNUM="1033;">
+				<P ALIGN=CENTER>2</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="3" SDNUM="1033;">
+				<P ALIGN=CENTER>3</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="4" SDNUM="1033;">
+				<P ALIGN=CENTER>4</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="5" SDNUM="1033;">
+				<P ALIGN=CENTER>5</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="6" SDNUM="1033;">
+				<P ALIGN=CENTER>6</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="7" SDNUM="1033;">
+				<P ALIGN=CENTER>7</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="8" SDNUM="1033;">
+				<P ALIGN=CENTER>8</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="9" SDNUM="1033;">
+				<P ALIGN=CENTER>9</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=BOTTOM SDVAL="10" SDNUM="1033;">
+				<P ALIGN=CENTER>10</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=TOP>
+				<P ALIGN=CENTER>Jack</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=TOP>
+				<P ALIGN=CENTER>Queen</P>
+			</TD>
+			<TD WIDTH=8% VALIGN=TOP>
+				<P ALIGN=CENTER>King</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P>Suits:</P>
+	<TABLE WIDTH=100% BORDER=1 CELLPADDING=4 CELLSPACING=3>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<COL WIDTH=64*>
+		<TR VALIGN=TOP  style="background-color:#c0c0c0">
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>0 &ndash; binary 00</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>1 &ndash; binary 01</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>2 &ndash; binary 10</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>3 &ndash; binary 11</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP style="background-color:white">
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>heart</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>diamond</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>club</P>
+			</TD>
+			<TD WIDTH=25%>
+				<P ALIGN=CENTER>spade</P>
+			</TD>
+		</TR>
+	</TABLE>
+	<P>Not quite arbitrarily chosen &ndash; as it happens, if you add 3
+	to the suit values, you get the character codes for the heart,
+	diamond, club, and spade on the PC console. That's how I get the
+	nifty printouts like the one in the table at the bottom of the page.</P>
+</td>
+<td class="sidebar">
+	<P>In brief: given a number &ldquo;card&rdquo; from
+	0..51:</P>
+	<P><B>rank = card / 4</B>, which is the same as <B>card &gt;&gt;
+	2</B></p>
+	<p><B>suit = card % 4</B>, which is the same as <B>card &amp; 3</B></P>
+	<P>where the % operator is modulo, &amp; is bitwise-AND, / is integer
+	divide, and &gt;&gt; is shift right.</P>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>Examples:</h2>
+	<div class="stripey">
+	<table  style="text-align:center">
+	<col width="15%">
+	<col width="20%">
+	<col width="27%">
+	<col width="38%">
+		<tr class="header">
+			<td>
+			<p>Card #</p>
+			</td>
+			<td>
+			<p>Rank<br>(card / 4)</p>
+			</td>
+			<td>
+			<p>Suit<br>(card % 4)</p>
+			</td>
+			<td>
+			<p>Card Name</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p>0</p>
+			</td>
+			<td>
+			<p>0 (Ace)</p>
+			</td>
+			<td>
+			<p>0 (Heart)</p>
+			</td>
+			<td>
+			<p>Ace of Hearts</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p>17</p>
+			</td>
+			<td>
+			<p>4 (Five)</p>
+			</td>
+			<td>
+			<p>1 (Diamond)</p>
+			</td>
+			<td>
+			<p>Five of Diamonds</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p>43</p>
+			</td>
+			<td>
+			<p>10 (Jack)</p>
+			</td>
+			<td>
+			<p>3 (Spade)</p>
+			</td>
+			<td>
+			<p>Jack of Spades</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p>50</p>
+			</td>
+			<td>
+			<p>12 (King)</p>
+			</td>
+			<td>
+			<p>2 (Club)</p>
+			</td>
+			<td>
+			<p>King of Clubs</p>
+			</td>
+		</tr>
+		</table>
+	</div>
+</td>
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	&nbsp;
+</tr>
+<!-- but if I do multiple rows, I can line sidebar stuff up with content! -->
+<tr>
+<td class="content">  <!-- a second round of content -->
+	<H2>Hand Representation</H2>
+	<P>Again, simplicity is the guiding light. At the beginning of a
+	game, the PIC uses the current LCRNG seed (hopefully well stirred)
+	and starts from there to generate the first ten cards out of the
+	deck.</P>
+	<P>Why ten cards? Five of them form the initial (pat) hand, and the
+	other five are the cards that can potentially be drawn.</P>
+	<P>A great deal more variety could conceivably be introduced to the
+	game by dealing only five cards, then stirring the LCRNG while the
+	player chose cards to hold, then dealing the drawn cards from the
+	newly stirred seed. I may modify the game to work that way &ndash;
+	but it's simpler to keep the dealing all in one
+	place, and 4 billion hands is enough variety to be getting along
+	with. Also, it would be very difficult to exhaustively test that kind
+	of arrangement with a PC simulation.</P>
+</td>
+<td class="sidebar">  <!-- and its sidekick -->
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">
+	<H2>The Dealing Algorithm</H2>
+	<P>With all that in mind, here is the actual dealing algorithm. 
+	</P>
+	<P>Start with an empty hand, i.e. no cards dealt. Then, for each of n
+	cards you want to deal: 
+	</P>
+	<OL>
+		<LI><P STYLE="margin-bottom: 0in">Generate a random number with the
+		LCRNG. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in">Grab the 6 most significant bits
+		(since the higher-order bits tend to be more random than the
+		lower-order ones). 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in">Now you have a random number from
+		0..63. There are only 52 cards possible, 0..51; so, if your number
+		is greater than 51, go back to step 1. 
+		</P>
+		<LI><P STYLE="margin-bottom: 0in">If any cards have already been
+		dealt, check the new card against them to make sure it isn't already
+		in the hand. If it is, go back to step 1. 
+		</P>
+		<LI><P>The card is legit! Add it to the hand. 
+		</P>
+	</OL>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">
+	<P STYLE="margin-bottom: 0.2in">The astute reader will have
+	osberved that this algorithm has the potential to run
+	forever. In theory, the random number generator could be called
+	trillions of times before a number from 0..51 could be gleaned from
+	the top 6 bits, or it may spend years choosing cards it's already
+	chosen. 
+	</P>
+	<P STYLE="margin-bottom: 0.2in">As it turns out, that isn't a
+	problem, and we owe it all to the fact that the &ldquo;random&rdquo;
+	number generator is so predictable. As shown on the previous page,
+	the LCRNG can only be in 2<sup>32</sup> states, and the deal-10-cards strategy
+	means there are only 2<sup>32</sup> possible pat-plus-draw hands. 2<sup>32</sup>, or
+	about four billion, isn't too bad a number of things to simulate
+	exhaustively on a modern PC, assuming that each instance only needs a
+	teeny thing done. I wrote a little PC C++ program that, for every
+	possible seed, dealt the corresponding 10-card hand the same way the
+	One Chip Poker program would do it. While it did that it kept track
+	of how many times it had to call the LCRNG in order to generate the
+	hand, and how many times it generated cards that were already present
+	and therefore had to be redone. </P>
+	<P STYLE="margin-bottom: 0.2in">It concluded this:<BR>Highest # calls
+	to LCRNG for any hand: 39<BR>Highest # collisions: 15</P>
+	<P STYLE="margin-bottom: 0.2in">39 calls to the LCRNG to generate 10
+	cards seems pretty bad, but this is all still blink-of-an-eye
+	performance. Good enough!</P>
+	<P STYLE="margin-bottom: 0.2in">Dealing cards this way turns out to
+	need only around 45 machine instructions and around 16 bytes of
+	variables including the 10 bytes for the hand, but not including the
+	LCRNG's code &amp; variables. (The LCRNG sits on 73 machine
+	instructions and 8 bytes of RAM).</P>
+</td>
+<td class="sidebar">
+	<H2><U>Big</U> Caveat:</H2>
+	<P STYLE="margin-bottom: 0.2in">This algorithm's performance would
+	degrade terribly if many more than 10 cards were needed &ndash; if it
+	were to be asked to deal the whole deck, it would likely take a <B>very</B>
+	long time. So, <I>it's really only usable because video poker
+	shuffles the deck between games and doesn't need to deal very many
+	cards per game</I>. Keep that in mind if you're thinking of using the
+	dealing code for a different game.</P>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<H2>Verifying PIC implementation</H2>
+	<P>The unit test for dealing is a little test program to deal out
+	10-card hands and show them on the LCD. Then, a corresponding PC
+	program does the LCRNG / hand generation the same way and prints out
+	expected results. 
+	</P>
+	<P>Here's an example of the simulation:</P>
+	<div class="stripey">
+	<table>
+	<col width="25%">
+	<col width="85%">
+		<tr class="even">
+			<td>
+			<IMG SRC="images/dealtest-sm.jpg" NAME="Graphic1" ALT="PIC deal test output" title="PIC deal test output">
+			</td>
+			<td>
+				<P>On a 20x4 character display, the 10-card hands will just fit,
+				one per line. 
+				The test starts with a hardcoded seed, generates 4
+				hands, and displays them &ndash; the first 5 cards on a row are
+				the pat hand, and the last 5 are the draw pool. 
+				</P>
+				<P>Then it awaits a button press from the user and does it all
+				again. Repeat forever.</P>			
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<IMG SRC="images/dealtest-pc.png" NAME="Graphic2" ALT="PC simulated deal test" title="PC simulated deal test">
+			</td>
+			<td>
+			<P>The PC equivalent has a cleaner display, though there is no
+			single-character &ldquo;10&rdquo; like the circuit has. I used a
+			zero instead. 
+			</P>
+			<P>Comparing this and the above picture, you can see that they're
+			getting the same hands by doing the same calls.</P>
+			</td>
+		</tr>
+	</table>
+	</div>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="lcrng.html">Random Numbers</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="draw.html">Drawing</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

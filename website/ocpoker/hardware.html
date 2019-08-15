@@ -1,0 +1,314 @@
+<html>
+<head>
+<title>One Chip Video Poker Hardware</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="basics.html">Poker Basics</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="lcrng.html">Random Numbers</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<h1>The Hardware</h1>
+	<p>As promised, the hardware for One Chip Video Poker is very simple.</p>
+	<div class="stripey">
+	<table>
+	<col width="10%">
+	<col width="10%">
+	<col width="37%">
+	<col width="33%">
+		<tr class="header">
+			<td>
+			<p align="center">Part</p>
+			</td>
+			<td>
+			<p align="center">#</p>
+			</td>
+			<td>
+			<p align="center">Value</p>
+			</td>
+			<td>
+			<p align="center">Comments</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p>U1</p>
+			</td>
+			<td>
+			<p align="center">1</p>
+			</td>
+			<td>
+			<p>PIC 16F628 (works with F628A, according to readers, though there may be programming conflicts with the fuses.)</p>
+			</td>
+			<td>
+			<p>The brains of the outfit</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p>LCD1</p>
+			</td>
+			<td>
+			<p align="center">1</p>
+			</td>
+			<td>
+			<p>20 x 4 Character w/ HD 44780 or compatible controller</p>
+			</td>
+			<td>
+			<p>The looks</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p>R1</p>
+			</td>
+			<td>
+			<p align="center">1</p>
+			</td>
+			<td>
+			<p>10K resistor</p>
+			</td>
+			<td>
+			<p>Pullup for U1's RA4 pin</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p>R2</p>
+			</td>
+			<td>
+			<p align="center">1</p>
+			</td>
+			<td>
+			<p>10K potentiometer</p>
+			</td>
+			<td>
+			<p>LCD contrast adjust</p>
+			</td>
+		</tr>	
+		<tr class="even">
+			<td>
+			<p>C1</p>
+			</td>
+			<td>
+			<p align="center">1</p>
+			</td>
+			<td>
+			<p>0.1 &mu;F ceramic capacitor</p>
+			</td>
+			<td>
+			<p>Power decoupler, put near power / ground pins of U1</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p>S0-S7</p>
+			</td>
+			<td>
+			<p align="center">8</p>
+			</td>
+			<td>
+			<p>Momentary contact, normally-open pushbutton switch</p>
+			</td>
+			<td>
+			<p>Player input</p>
+			</td>
+		</tr>	
+	</table>
+</div>
+		
+</td>
+<td class="sidebar">
+<center>
+<a href="index.html">
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+<p>One Chip Video Poker Project</p>
+</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>But Wait...</h2>
+	<p>The parts list doesn't include whatever parts you'll need to get a
+	good solid 5V power supply. The power demands of this circuit are
+	pretty minimal; a 78L05 should work fine. I've run it with a 7805,
+	which is overkill; those can push 1.5 amps and the requirement from
+	this circuit is nowhere near that, though I haven't measured what it
+	actually is. I've also used a <a href="http://www.maxim-ic.com/quick_view2.cfm/qv_pk/1143">MAX667</a> 
+	from <a href="http://www.maxim-ic.com">Maxim</a>, which is a superb
+	choice for a battery-powered version because its “overhead”
+	in terms of dropout and current consumption are very low. <br>
+</p>
+</td>
+<td class="sidebar">
+	<p>If your LCD has a backlight, you're on your own wiring that up. 
+	If the backlight uses LEDs, you'll likely need a current limiting
+	resistor. There usually isn't one built in, since the makers
+	don't know the voltage your circuit will use. Try a 
+	pot starting at ~1K, and slowly lower the resistance
+	until you find a good value.</p>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>Schematic, HEX, and sources</h2>
+	<div class="stripey">
+	<table>
+	<col width="15%">
+	<col width="85%">
+		<tr class="even">
+			<td class="strthumb">
+			<p><a href="images/OCPoker-Schematic1.png" target="_blank">
+			<img src="images/OCPoker-Schematic1-tn.png" alt="Schematic" title="Schematic"></a></p>
+			</td>
+			<td>
+			<p><a href="images/OCPoker-Schematic1.png">Schematic</a> in .PNG format. </p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p><a href="hexsrc/ocp-main.HEX">Hex file</a></p>
+			</td>
+			<td>
+			<p>Burn-n-go.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td class="strthumb">
+			<p><a href="hexsrc/OCPoker051805b.zip">Source ZIP</a></p>
+			</td>
+			<td>
+			<p>For the game only (Includes Hex file). If you're interested in sources for the
+			unit tests, <a href="../contact.html">let me know</a>.</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p><a href="images/ocpbread.jpg" target="_blank"><img src="images/ocpbread-tn.jpg" alt="Breadboarded version" title="Breadboarded version">
+			</a></p>
+			</td>
+			<td>
+			<p>This is my breadboarded version (click thumbnail for larger
+			image). The actual One Chip Poker circuit is entirely on the white
+			breadboard at the bottom of the image, except for the LCD and its
+			contrast-adjust potentiometer.</p>
+			</td>
+		</tr>
+		</table>
+	</div>
+</td>
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	&nbsp;
+</tr>
+<!-- but if I do multiple rows, I can line sidebar stuff up with content! -->
+<tr>
+<td class="content">  <!-- a second round of content -->
+	&nbsp;
+<td class="sidebar">  <!-- and its sidekick -->
+	&nbsp;
+</td>
+</tr>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="basics.html">Poker Basics</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="lcrng.html">Random Numbers</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

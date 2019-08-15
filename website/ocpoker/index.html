@@ -1,0 +1,313 @@
+<html>
+<head>
+<title>One Chip Video Poker</title>
+<link rel="stylesheet" href="../style/unclesean-projmain.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: left">
+		&nbsp;
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="../romanclock/index.html">Roman Numeral Clock</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-projmain.png" style="float:left">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<h1>One Chip Video Poker</h1>
+	<p>This is a simple video poker game for the PIC 16F628 and a 20x4
+	character LCD. It's written in PIC assembly for MPASM.</p>
+	<p>I started the project in 2002. I originally intended it as a
+	birthday present for my brother, who is an enthusiastic if occasional
+	player
+	of casino video poker. This Mark I version foundered, though, as the
+	PIC 16F84 didn't have quite enough program ROM to handle it; I shelved
+	the
+	project until just recently when I got a programmer that could handle
+	the 16F628.</p>
+	<p>As of this writing (Aug. 10, 2004) I still haven't gotten around to
+	making a &ldquo;production model&rdquo; suitable as a gift, but the brother may yet
+	receive one.</p>
+	<p>If you build this project, please <a href="../contact.html">email me</a>
+	and let me know what you think of it!</p>
+	<h2>For Those Who Just Want To Build It</h2>
+	<p><a href="hardware.html">The Hardware Section</a> is for you – it
+	shows
+	the schematic and parts list and has the .hex file ready to burn!</p>
+	
+</td>
+<td class="sidebar">
+<center>
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Poker" title="One Chip Poker">
+<p>One Chip Video Poker Project</p>
+<p><b>Sections:</b></p>
+<a href="basics.html">Video Poker: The Basics</a><br>&mdash;<br>
+<a href="hardware.html">The Hardware</a><br>&mdash;<br>
+<a href="lcrng.html">The Random Number Generator</a><br>&mdash;<br>
+<a href="deal.html">Dealing</a><br>&mdash;<br>
+<a href="draw.html">Drawing</a><br>&mdash;<br>
+<a href="scoring.html">Scoring</a><br>&mdash;<br>
+<a href="money.html">Bets and Payoffs</a><br>&mdash;<br>
+<a href="gallery.html">Gallery</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+<h2>Overview</h2>
+<p>Why Video Poker, you ask? </p>
+	<ol>
+	  <li>
+		<p>It's fun!</p>
+	  </li>
+	  <li>
+		<p>It's a simple game requiring no real strategy on the computer's
+		part - all it has to do is deal and score. An ideal candidate for a
+		tiny computer.</p>
+	  </li>
+	  <li>
+		<p>And yet, implementing it touches on a wide range of game
+		programming, general assembly language, and PIC-specific techniques.</p>
+	  </li>
+	  <li>
+		<p>It can be built with a minimum of parts and no need for a
+		printed circuit board. The LCD is by far the biggest expense in this
+		project, assuming you already have the computer and programmer board
+		needed for PIC development. With a bit of luck, though, 4x20 displays
+		can be found for under $20 U.S. at surplus shops - and sometimes they're not too much
+		more than that brand new. Some possible suppliers are listed on the 
+		<a href="../links.html">links page</a>.</p>
+	  </li>
+	</ol>
+	<p>The following sections discuss the innards of One Chip Video Poker
+	in great, even exaggerated, detail.
+	I'm hoping this will be useful to novice assembly programmers in
+	finding out ways to handle various types
+	of tasks, while not being too tedious for the more advanced programmer
+	to read.</p>
+	<p>I developed One Chip Poker in stages, testing each
+	stage separately to make sure they worked. This approach, called unit testing,
+	is a good way to organize complex projects. By PIC terms, One Chip Poker is 
+	fairly complex.
+	The sections about software show unit tests for the particular part of the
+	program they're describing. 
+	</p>
+</td>
+<td class="sidebar">
+<h2>The Mark I Model</h2>
+	<p>Here are some pictures of the original 16F84 version, which I
+	built in 2002. It is playable, but not finished because I ran out of
+	program memory before I could get the code put in for handling bets
+	and payoffs. The F628 version uses a lot of the same code.</p>
+	<p>click thumbnails for larger images.</p>
+	<center>
+	<p>
+	<a href="images/vpokscreen.jpg" target="_blank">
+	<img src="images/vpokscreen-tn.jpg" alt="Mark I screen" title="Mark I screen" border="3">
+	</p>
+	<p>Screen shot of game in progress</p></a>
+	<p>
+	<a href="images/vpokwhole.jpg" target="_blank">
+	<img src="images/vpokwhole-tn.jpg" alt="Mark I board" title="Mark I board" border="3">
+	</p>
+	<p>The prototype rig</p></a>
+	</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>The sections</h2>
+	<div class="stripey">
+	<table>
+	<col width="25%">
+	<col width="75%">
+		<tr class="header">
+			<td>
+			<p>Section</p>
+			</td>
+			<td>
+			<p>Comments</p>
+			</td>
+		<tr class="even">
+			<td>
+			<p><a href="basics.html">Video Poker: The Basics</a></p>
+			</td>
+			<td>
+			<p>an introduction for those unfamiliar with the game.</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p><a href="hardware.html">The Hardware</a></p>
+			</td>
+			<td>
+			<p>the schematic for the project, plus the parts list and .hex
+			file. The same circuit is used for all the unit tests too.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p><a href="lcrng.html">The Random Number Generator</a> </p>
+			</td>
+			<td>
+			<p>The heart of a game of chance is the Random Number Generator
+			(RNG). This section presents the one used in One Chip Poker</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p><a href="deal.html">Dealing</a></p>
+			</td>
+			<td>
+			<p>How the game represents cards and deals hands.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p><a href="draw.html">Drawing</a></p>
+			</td>
+			<td>
+			<p>Once the player has chosen cards to hold, this is what the
+			game does.</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p><a href="scoring.html">Scoring</a></p>
+			</td>
+			<td>
+			<p>How to spot a winning hand.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<p><a href="money.html">Bets and Payoffs</a></p>
+			</td>
+			<td>
+			<p>Credit where credit is due - and debt too!</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<p><a href="gallery.html">Gallery</a></p>
+			</td>
+			<td>
+			<p>Pictures of readers' One Chip Video Poker versions!</p>
+			</td>
+		</tr>
+	</table>
+	</div>
+</td>
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	<h2>Disclaimer</h2>
+	<p>It is not the author's intent to encourage gambling for money, nor
+	to discourage it, particularly. This project is presented simply as a
+	fun thing to build and a way to learn some assembly
+	programming tricks. The author takes no responsibility for gambling
+	addiction, repetitive motion disorders, or other malady which may
+	arise or be exacerbated by the reader's exposure to this project. 
+	This project is also not consistent with the standards
+	required of real casino games, and should not be used for betting.
+	It's just for laughs. </p>
+</tr>
+
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: left">
+		&nbsp;
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="../romanclock/index.html">Roman Numeral Clock</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-projmain.png" style="float:left">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-projmain.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<center>
+<span style="color:white"><b>
+<img src="http://counter.xmission.com/cgi-bin/wwwcount.cgi?df=sgigo2&dd=B&reload=N"><br>
+visitors since 6/1/2005.
+<!-- pixeldecor acknowledgement for pages that use her patterns
+backgrounds by<br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+-->
+</b></span>
+</center>
+</body>
+</html>

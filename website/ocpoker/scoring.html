@@ -1,0 +1,530 @@
+<html>
+<head>
+<title>One Chip Video Poker Scoring</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="draw.html">Drawing</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="money.html">Bets / Payoffs</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<H1>Scoring</H1>
+	<P>Now that the hand is dealt or drawn, it's time to score it.</P>
+	<P>There is surprisingly little you need to know about a poker hand
+	in order to score it. Only five characteristics need to be found:</P>
+	<UL>
+		<LI><P><B>Flush Flag:</B> 1 if all cards
+		in the hand have the same suit, 0 otherwise. 
+		</P>
+		<LI><P><B>Straight Flag:</B> 1 if the
+		cards form a straight, 0 otherwise. 
+		</P>
+		<LI><P><B>Number of Pairs: </B>
+		Every pair is
+		enumerated. For instance, three cards of the same rank form three
+		pairs. If the hand contains the Five of Hearts, the Five of
+		Diamonds, and the Five of Spades, the pairs are Five of Hearts +
+		Five of Diamonds; Five of Hearts + Five of Spades; Five of Diamonds
+		+ Five of Spades. Similarly, four of a kind forms six pairs.</P>
+		<LI><P><B>Lowest Rank:</B> Rank of
+		lowest-ranking card in the hand. Only matters for spotting Royal
+		Flushes. 
+		</P>
+		<LI><P><B>Pair Rank:</B> Rank of last (or only) pair in the hand.
+		Relevant only in spotting high pairs.</P>
+	</UL>
+</td>
+<td class="sidebar">
+<center>
+<a href="index.html">
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+<p>One Chip Video Poker Project</p>
+</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<P>Once you know these, the following table shows how they determine
+	the score. In it, values marked &ldquo;X&rdquo; mean that it doesn't
+	matter what value that characteristic has. The osbervant reader,
+	though, will have figured out that any hand that is a flush or
+	straight cannot have any pairs in it, and vice versa.</P>
+	<div class="stripey">
+	<TABLE>
+		<TR VALIGN=TOP class="header">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER><B>Flush</B></P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER><B>Straight</B></P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER><B># of Pairs</B></P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER><B>Low Rank</B></P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER><B>Pair Rank</B></P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER><B>Score</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="even">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>=10</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER><B>Royal Flush</B></P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="odd">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>&lt;10</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Straight Flush</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>6</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>4 of a kind</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="odd">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>4</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Full House</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>0</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Flush</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="odd">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>0</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Straight</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>3</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>3 of a kind</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="odd">
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>2</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Two Pair</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>1</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>X</P>
+			</TD>
+			<TD WIDTH=10%>
+				<P ALIGN=CENTER>ace or &gt;10</P>
+			</TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>Jacks or Better</P>
+			</TD>
+		</TR>
+		<TR VALIGN=TOP class="odd">
+			<TD WIDTH=10%></TD>
+			<TD WIDTH=10%></TD>
+			<TD WIDTH=10%></TD>
+			<TD WIDTH=10%></TD>
+			<TD WIDTH=10%></TD>
+			<TD WIDTH=50%>
+				<P ALIGN=CENTER>All others worthless</P>
+			</TD>
+		</TR>
+	</TABLE>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">
+	<H2>Coding Details</H2>
+	<P>Here's pseudocode for finding these characteristics. The assembly code differs from it in minor ways but
+	this is how it runs.</P>
+	<H3>Flush Flag</H3>
+	<OL>
+		<LI>clear flush flag.</li>
+		<LI>Find and memorize the suit of the first card in the hand. </li>
+		<LI>For each of the other 4 cards: 
+		<OL>
+			<LI>Find the suit. </li>
+			<LI>If it doesn't match the first
+			card's suit, quit. 
+		</OL></li>
+		<LI>If you've reached here, it's a flush. Set flush flag and
+		quit. </li>
+	</OL>
+	<H3>Number of Pairs / Pair Rank</H3>
+	<OL>
+		<LI>set pair count (numpairs) to 0. 
+		<LI>For card i = 0..3: 
+		<OL>
+			<LI>memorize card i's rank
+			(temprank). 
+			<LI>For card j = i+1 to 4: 
+			<OL>
+				<LI>Find card j's rank. 
+				<LI>If card j's rank = temprank, increment numpairs and set
+				pairrank = temprank. 
+			</OL>
+		</OL>
+	</OL>
+	As a side effect Pair Rank is found in this process. As seen above
+	it's used for spotting high pairs.
+	<H3>Straight Flag / Lowest Rank</H3>
+	<OL>
+		<LI>Clear straight flag. 
+		<LI>Make a temporary copy of the hand
+		(temphand).<BR>You need to do this because it gets trashed for
+		ace-high straight spotting, below. 
+		<LI>call the find high &amp; low
+		subroutine (below); this sets hicard to the rank of the
+		highest-ranking card in the hand, &amp; locard to the lowest rank. 
+		<LI>if hicard-locard = 4, it's a
+		straight! set straight flag and return. 
+		<LI>there may still be an ace-high
+		straight: if locard != 0 (Low Ace), there isn't. In that case, quit.
+		<LI>There may be an ace-high straight.
+		For each card in temphand: 
+		<OL>
+			<LI>Find the rank. 
+			<LI>If rank = 0 (low ace), rewrite
+			the card as rank 13 (high ace). 
+		</OL>
+		<LI>Go to step 3.<BR>The exact same code that looked for an
+		ace-low or non-ace straight works verbatim! 
+	</OL>
+	<h3>Finding High &amp; Low card:</h3>
+	<OL>
+		<LI>find rank of first card in
+		temphand. 
+		<LI>set hicard and locard both to
+		first card's rank. 
+		<LI>For each of the other 4 cards in
+		temphand: 
+		<OL>
+			<LI>Find the rank. 
+			<LI>If rank &lt; locard, set locard =
+			rank. 
+			<LI>If rank &gt; hicard, set hicard = rank. 
+		</OL>
+	</OL>
+	<P>A happy side-effect of this process is that locard is used in
+	spotting royal flushes.</P>
+	<H3>Find the score</H3>
+	<P>Equipped with the characteristics, you can use the table above to
+	figure out what kind of hand you've got. At this point, if it's the
+	initial deal, report the score and await the player's discard
+	instructions. If it's after the draw, calculate and deliver the
+	FILTHY LUCRE if any is forthcoming.</P>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">  <!-- a second round of content -->
+	<H2>The Scoring Test Program</H2>
+	<P>The unit test for this step is a good illustration of how the PC
+	can guide the PIC. Also, since the unit test on dealing didn't test
+	the card-drawing code, it seemed appropriate to jam it in here.</P>
+	
+	<P>using the PC-side C poker simulator, generate hands. Start at seed
+	0. 
+	</P>
+	<OL>
+		<LI>Generate the 10-card hand for the
+		seed. 
+		<LI>For h = each of the 32 possible
+		held-card configurations (heldmasks): 
+		<OL>
+			<LI>perform the draw to make a 5-card
+			hand. 
+			<LI>score the 5-card hand, yielding
+			the quantity x (from 0 to 9, where 0 = worthless and 9 = royal
+			flush). 
+			<LI>if no seed has yet generated a
+			5-card hand scoring x using hold config h, record this seed as
+			doing so. 
+		</OL>
+		<LI>stop when every possible score from every possible heldmask
+		has been yielded by every possible draw configuration.<BR>until
+		then, increment the seed and try again. 
+	</OL>
+	<P>This should yield, then, a set of 320 seeds: 10 different scores
+	times 32 draw combinations.
+	</P>
+	<P>On the PIC side, the test program tries out each of these 320 seeds, knowing the heldmask
+	and the expected score. It deals the hand using the random seed, then draws according to the heldmask,
+	then scores the hand. If the score returned by the scoring subroutine matches the
+	expected score, all's well.</P>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<td class="content">
+	<IMG SRC="images/patroyal1sm.jpg" alt="Pat Royal Flush!" title="Pat Royal Flush!" style="float:left; margin:8px">
+	<P>Here's a screenshot from the score testing program. On the top,
+	we see the seed that was used to deal the hand, followed by the
+	heldmask (here, all cards held), followed by the expected score
+	once the draw is applied. The second line shows the 10-card hand
+	drawn. On the third line, there is the pat hand and its score,
+	then finally on the last line there's the drawn hand and its
+	score.</P>
+	<IMG SRC="images/onetoroyal1sm.jpg" alt="Almost Royal Flush" title="Almost Royal Flush" style="float:left; margin:8px">
+	<P>Here's a bit more typical situation as far as royal flushes are
+	concerned &ndash; in the pat hand, all but one card is from the
+	royal flush in diamonds. Faced with this, a wise player would hold the 4 Royal Flush cards and
+	hope for the best. In this case, it works out!</P><P>Note that the held-mask reads backwards
+	from the hand display; the non-held card is number 5 which is the
+	first bit shown.</P>
+	<IMG SRC="images/nonetoroyal1sm.jpg" alt="Hidden Royal Flush" title="Hidden Royal Flush" style="float:left; margin:8px">
+	<P>And here's an interesting case indeed &ndash; a hand which, as
+	dealt, is a respectable Two Pair &ndash; but if you toss all of
+	them, the drawn five cards form a Royal Flush. Things like this
+	happen, and there's no way to know! How perverse it is, our world.</P>
+	
+</td>
+<td class="sidebar">  <!-- and its sidekick -->
+	<P>The scoring test program didn't only look at Royal
+	Flushes, but since they're so rare in gameplay it's kind of fun to
+	see them so I featured them here.</P>
+	<P>The first shown is the coveted PAT ROYAL FLUSH. If you're very good you
+	may one day see one. You can also see one if you're evil and rig the code to spit one out.</P>
+</td>
+</tr>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="draw.html">Drawing</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="money.html">Bets / Payoffs</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

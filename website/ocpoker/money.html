@@ -1,0 +1,268 @@
+<html>
+<head>
+<title>One Chip Video Poker Bets and Payoffs</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="scoring.html">Scoring</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="gallery.html">Gallery</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<H1>Bets and Payoffs</H1>
+	<P>The following is the payoff table used by One Chip Video Poker. In the first column we find
+	the value returned by scorehand, 0..9. The second column shows how many coins a hand with
+	that score is worth per coin bet; that is, if you bet n coins on the hand you get n times
+	the number shown as a payoff.</P>
+	<div class="stripey">
+	<table>
+	<col width="10%">
+	<col width="37%">
+	<col width="53%">
+	<tr class="header">
+		<td>
+		<p><center><b>Score</b></center></p>
+		</td>
+		<td>
+		<P><center><b>Payoff per Coin Bet</b></center></P>
+		</td>
+		<td>
+		<p><center><b>Name</b></center></p>
+		</td>
+	</tr>
+	<tr class="even">
+		<td><p><center>0</center></p></td>
+		<td><p><center>0</center></p></td>
+		<td><p>Worthless</p></td>
+	</tr>
+	<tr class="odd">
+		<td><p><center>1</center></p></td>
+		<td><p><center>1</center></p></td>
+		<td><p>Jacks or Better</p></td>
+	</tr>
+	<tr class="even">
+		<td><p><center>2</center></p></td>
+		<td><p><center>2</center></p></td>
+		<td><p>Two Pair</p></td>
+	</tr>
+	<tr class="odd">
+		<td><p><center>3</center></p></td>
+		<td><p><center>3</center></p></td>
+		<td><p>Three of a Kind</p></td>
+	</tr>
+	<tr class="even">
+		<td><p><center>4</center></p></td>
+		<td><p><center>4</center></p></td>
+		<td><p>Straight</p></td>
+	</tr>
+	<tr class="odd">
+		<td><p><center>5</center></p></td>
+		<td><p><center>6</center></p></td>
+		<td><p>Flush</p></td>
+	</tr>
+	<tr class="even">
+		<td><p><center>6</center></p></td>
+		<td><p><center>9</center></p></td>
+		<td><p>Full House</p></td>
+	</tr>
+	<tr class="odd">
+		<td><p><center>7</center></p></td>
+		<td><p><center>25</center></p></td>
+		<td><p>Four of a Kind</p></td>
+	</tr>
+	<tr class="even">
+		<td><p><center>8</center></p></td>
+		<td><p><center>50</center></p></td>
+		<td><p>Straight Flush</p></td>
+	</tr>
+	<tr class="odd">
+		<td><p><center>9</center></p></td>
+		<td><p><center>800</center></p></td>
+		<td><p><b>Royal Flush</b></p></td>
+	</tr>
+	</table>
+	</div>
+</td>
+<td class="sidebar">
+<center>
+<a href="index.html">
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+<p>One Chip Video Poker Project</p>
+</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>Knowledge Without Power</h2>
+	<P>One thing that would be nice is for the game to remember what your bankroll was when last you left off
+	playing.</P>
+	<P>As with the RNG seed all we have to do is, whenever the bankroll changes, write it to the data EEPROM.
+	The only times it changes are when a bet is made and when a payoff happens.</P>
+	<P>There is some chance that the user will shut the power off just as the new bankroll amount is being written
+	into the data EEPROM. Unlikely, but possible, and it would trash whatever's being written. This is not really
+	a problem for the random seed, since any value for that is legitimate. For the bankroll, it could be an annoyance;
+	all One Chip Poker does is check for illegal bankroll amounts, see below.</P>
+	<h2>The Limits of Wealth</h2>
+	<P>One Chip Poker stores the player's account of coins in a 16-bit container (so, really 2 8-bit containers).
+	Therefore, in theory the player could have 65535 coins stored up - it'd take a few Royal Flushes to get there,
+	but it is possible. But there are good reasons for us to limit the bankroll to a lower number:</P>
+	<ul>
+	  <li>It's useful for there to be such a thing as an illegal value - for instance, if we limit the number of coins
+	  the player can have to 50,000, then any number from 50,001 to 65,535 is illegal. If, on startup, the number of
+	  coins stored in EEPROM is an illegal value, that's an indication that either the chip is newly burnt (if you
+	  arrange for the hex file to stuff 0xFFFF in there, say) or that some kind of trashing happened. From there the
+	  game can recover by setting the bankroll to some known starting value, which is a decent recovery from trashed EEPROM since
+	  there's no way to know what the number should have been.</li>
+	  <li>It's entirely possible that some people who play this are not &ldquo;Computer People&rdquo; and feel better
+	  about Nice Round Numbers like 50,000 than they do about oddball things like 65,535. Put another way, it's a 
+	  professionalism thing.</li>
+	</ul>
+	<P>50,000 is the biggest truly Nice Round Number that fits in 16 bits, IMO; 60,000 or 65,000 look a bit
+	arbitrary and weird. Of course, you're free to tweak it. But 50,000 offers a lot of room for a bankroll to
+	grow; it's unlikely that, if the player hit a 5-coin Royal Flush, that they'd be unable to collect all 4,000 of
+	their coins of winnings. (One of the pictures below from the Unit Test shows such a situation, though. Contemplate
+	the horror of it, the feeling that you've been cheated of <i>all that money</i>.)</P>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">  <!-- a second round of content -->
+	<h2>The Bets Unit Test</h2>
+	<P>The unit test for betting is a quickie that builds on the scoring test. It only worries about pat hands,
+	since the scoring test should have shown that the code for drawing and scoring a new hand is working.</P>
+
+	<IMG SRC="images/vpbettest-initsm.jpg" alt="Initial Bet Test" title="Initial Bet Test" style="float:left; margin:8px">
+	<P>This is the initial state when the bet unit test is first turned on. The .hex file stores an illegal
+	value for the number of coins in the EEPROM, so the program writes 500 there and starts with that.</P>
+	<p>The display shows, from top to bottom and left to right:
+	seed, current bankroll, number of coins bet; hand, score,
+	number of coins paid off per coin bet; total payoff, and
+	number of coins that will be in the bankroll at the start of the
+	next hand.</P>
+
+	<IMG SRC="images/vpbettest-partialsm.jpg" alt="Partway through Bet Test" title="Partway through Bet Test" style="float:right; margin:8px">
+	<P>Partway through the test, it looks like this. So far, the expected values have been showing up just fine.
+      At this point I shut off the circuit.<br clear="right"></P>
+	  
+	<IMG SRC="images/vpbettest-restartsm.jpg" alt="Bet Test Restart" title="Bet Test Restart" style="float:left; margin:8px">
+	<P>Aha, looks like the initial value is what I left off with, and recognized as legal by the test program.
+	<br clear="left"></P>
+
+	<IMG SRC="images/vpbettest-clampsm.jpg" alt="Too much money!" title="Too much money!" style="float:right; margin:8px">
+	<P>If you run through the test a few times, the coins add up pretty fast - here, it's shown that
+      hitting a Royal Flush on 5 coins bet maxes out the coin capacity when you start with 49905 coins.
+      So, the clamp-to-50,000 code is working too!<br clear="right"></p>
+
+</td>
+<td class="sidebar">  <!-- and its sidekick -->
+	<P>The scoring test program didn't only look at Royal
+	Flushes, but since they're so rare in gameplay it's kind of fun to
+	see them so I featured them here.</P>
+	<P>The first shown is the coveted PAT ROYAL FLUSH. If you're very good you
+	may one day see one. You can also see one if you're evil and rig the code to spit one out.</P>
+</td>
+</tr>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="scoring.html">Scoring</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="gallery.html">Gallery</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

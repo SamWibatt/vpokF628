@@ -1,0 +1,347 @@
+<html>
+<head>
+<title>Video Poker: The basics</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: left">
+		&nbsp;
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="hardware.html">Hardware</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<h1>Video Poker: the Basics</h1>
+	<p>This page is for those unfamiliar with video poker. If you already
+	know the game pretty well, you can get started with the details by
+	clicking the &ldquo;next&rdquo; link at the top or bottom right.</p>
+	<p>There are several variations on video poker. This implementation
+	is one known as Jacks or Better. It doesn't have any wild cards or
+	other oddities - such features are left as an exercise to the reader.
+	If anyone comes up with a variant like that, I'd be thrilled to <a
+	 href="../contact.html">hear
+	about it</a>.</p>
+	<h2>The very very basics</h2>
+	<p>Video Poker, in this implementation and many found in actual
+	casinos, uses a single 52-card deck which is shuffled before every
+	game.</p>
+	<p>Every card in the deck has two important properties:</p>
+	<ul>
+	  <li>
+		<p style="margin-bottom: 0in;"><b>Rank:</b> There are thirteen
+		ranks. These are, in ascending order: Ace (A), 2, 3, 4, 5, 6, 7, 8, 9,
+		10, Jack (J), Queen (Q), and King (K). Aces have the unique property
+		that they're either the highest- or lowest-ranked card. </p>
+	  </li>
+	  <li>
+		<p><b>Suit:</b> There are four suits: Hearts, Spades, Clubs, and
+		Diamonds. Unlike with ranks, Video Poker doesn't attach any ordering to
+		suits, i.e. Spades are not “worth” more than Hearts, or anything. All
+		that matters with suits is whether all the cards in the hand have the
+		same suit. </p>
+	  </li>
+	</ul>
+	</td>
+<td class="sidebar">
+<center>
+<a href="index.html">
+<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+<p>One Chip Video Poker Project</p>
+</a>
+</center>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<p>Each &ldquo;game&rdquo; of video poker is very short. It follows
+	these steps:</p>
+	<ol>
+	  <li>
+		<p style="margin-bottom: 0in;"><b>The player makes a bet.</b> In
+		this implementation, the currency is the abstract &ldquo;coin&rdquo; and you can
+		pretend that is any currency or multiple you like - pennies, quarters,
+		shekels, euros, or if you're a high roller, you can say that each coin
+		represents five billion British Pounds (even allowing for the fact that
+		the British billion is 1000 times the size of my native USA billion).
+		Or you can play for bragging rights, or number of noogies you're
+		allowed to give your kid brother. In any case, a bet is the first step,
+		and it can be from one to five coins. The more coins you play, the
+		higher the potential payoff, but also the faster you go through your
+		supply. </p>
+	  </li>
+	  <li>
+		<p style="margin-bottom: 0in;"><b>The computer deals five cards to
+		the player.</b> A set of five cards constitutes a &ldquo;hand&rdquo;. At this
+		point, as a courtesy, the computer analyzes the hand and reports
+		whether it is a winning hand. If so, it displays what kind. Winning
+		hands are shown below. </p>
+	  </li>
+	  <li>
+		<p style="margin-bottom: 0in;"><b>The player chooses cards to hold.</b>
+		Video Poker is a species of &ldquo;draw&rdquo; poker, in which the player is
+		allowed to discard some or all of the initially-dealt cards and get new ones dealt,
+		if it seems likely to improve the hand to do so. Cards which are not discarded are &ldquo;held&rdquo;. It is also
+		OK to hold all the cards, if the initial deal happens to be favorable.
+		(This situation, holding all the cards, is known as a &ldquo;pat hand&rdquo;.) </p>
+	  </li>
+	  <li>
+		<p><b>Cards not held get replaced by new cards from the deck.</b>
+		This action is known as &ldquo;drawing&rdquo;. A new hand is thus formed. </p>
+	  </li>
+	  <li>
+		<p><b>The computer analyzes the new hand</b> and, if it's a winning
+		hand, pays the player the appropriate number of coins. </p>
+	  </li>
+	</ol>
+</td>
+<td class="sidebar">
+	<p>In short, the idea is this. Get a hand, decide if your payoff is likely
+	to improve by discarding certain cards, then get paid or not based on
+	the results of your decision. For a game that's so simple, it's
+	amazingly compelling, and it involves some strategy. Said strategy is
+	outside the scope of this project - there are a bazillion web pages
+	out there that describe it, though be warned: many of them are of the
+	&ldquo;see how many popups we can litter the screen with&rdquo;
+	type. </p></td>
+</td>
+</tr>
+<tr>
+<td class="content">
+	<h2>The Winning Hands</h2>
+	<div class="stripey">
+	<table>
+	<col width="15%">
+	<col width="70%">
+	<col width="15%">
+		<tr class="even">
+			<td class="strthumb">
+			<p align="center">Jacks or Better</p>
+			</td>
+			<td>
+			<p>AKA High Pair. Hand contains only one pair whose rank is Jack
+			or higher (including Ace)</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-highpair.png" name="Graphic1" alt="High Pair - 4 8 10 K K" title="High Pair - 4 8 10 K K"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p align="center">Two Pair</p>
+			</td>
+			<td>
+			<p>Two pairs of differing rank.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-twopair.png" name="Graphic2" alt="Two Pair - 2 2 J J Q" title="Two Pair - 2 2 J J Q"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="even">
+			<td class="strthumb">
+			<p align="center">3 of a kind</p>
+			</td>
+			<td>
+			<p>Three cards of the same rank.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-3kind.png" name="Graphic3" align="left" alt="3 of a kind - 7 7 7 3 A" title="3 of a kind - 7 7 7 3 A"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p align="center">Straight</p>
+			</td>
+			<td>
+			<p>All 5 cards' ranks form a sequence, such as 3, 4, 5, 6, 7.
+			Aces can be either high or low, so both A, 2, 3, 4, 5 and 10, J, Q, K,
+			A are straights. However, that is the only &ldquo;wraparound&rdquo; straight; Q, K,
+			A, 2, 3 is not a straight.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-straight.png" name="Graphic4" alt="Straight - A 2 3 4 5" title="Straight - A 2 3 4 5"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="even">
+			<td class="strthumb">
+			<p align="center">Flush</p>
+			</td>
+			<td>
+			<p>All 5 cards have the same suit.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-flush.png" name="Graphic5" align="left" alt="Flush in clubs - 2 4 7 10 K" title="Flush in clubs - 2 4 7 10 K"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p align="center">Full House</p>
+			</td>
+			<td>
+			<p>Three of a kind plus a Pair: three cards with one
+			identical rank, and a pair with a different rank.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-fullhouse.png" name="Graphic6" alt="Full House - 8 8 8 J J" title="Full House - 8 8 8 J J"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="even">
+			<td class="strthumb">
+			<p align="center">4 of a kind</p>
+			</td>
+			<td>
+			<p>4 cards with the same rank.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-4kind.png" name="Graphic7" align="left" alt="4 of a kind - 9 9 9 9 5" title="4 of a kind - 9 9 9 9 5"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="odd">
+			<td class="strthumb">
+			<p align="center">Straight Flush</p>
+			</td>
+			<td>
+			<p>A straight made up of cards that all have the
+			same suit.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-strtflsh.png" name="Graphic8" alt="Straight Flush in Diamonds - 4 5 6 7 8" title="Straight Flush in Diamonds - 4 5 6 7 8"
+			 align="left">
+			 </td>
+		</tr>
+		<tr class="even">
+			<td class="strthumb">
+			<p align="center"><b>Royal Flush</b></p>
+			</td>
+			<td>
+			<p>The coveted Royal Flush is a special case of straight flush,
+				consisting of the cards 10, J, Q, K, A all in the same suit.</p>
+			</td>
+			<td>
+			<p><img src="images/smhand-royal.png" name="Graphic9" align="left" alt="Royal Flush in Spades" title="Royal Flush in Spades"
+			 align="left">
+			 </td>
+		</tr>	</table>
+	</div>
+</td>
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	&nbsp;
+</tr>
+<!-- but if I do multiple rows, I can line sidebar stuff up with content! -->
+<tr>
+<td class="content">  <!-- a second round of content -->
+	<p>Note that not every hand is a winning hand. In fact, just over
+	half the possible hands aren't, and that is the key to Video Poker's
+	house advantage. The winning hands described above are the only ones
+	that pay back money when you get them; the rarer the type of hand,
+	the higher the payoff. </p>
+<td class="sidebar">  <!-- and its sidekick -->
+	&nbsp;
+</td>
+</tr>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: left">
+		&nbsp;
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="hardware.html">Hardware</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

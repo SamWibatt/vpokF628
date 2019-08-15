@@ -1,0 +1,305 @@
+<html>
+<head>
+<title>One Chip Video Poker Drawing</title>
+<link rel="stylesheet" href="../style/unclesean4.css" type="text/css">
+</head>
+<body>
+<!-- this version I'm trying putting the navbar INSIDE the bigtable. -->
+<!-- "masthead" type stuff - my navigation bar thingy - should go here? no,
+     it goes below. How about just a site logo. -->
+<center>
+<a name="top">			<!-- FOR PAGE-TOP LINK THING -->
+<a href="../index.html">
+<img border="0" src="../bg-etc/masthead2.png" alt="Uncle Sean's Electronix Fun Page" title="Uncle Sean's Electronix Fun Page">
+</a>
+</center>
+<!-- main navigation stuff -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0">
+<tr>
+	<td width="25%"><center><a href="../index.html"><img border="0" src="../bg-etc/homebutton.png" alt="Home" title="Home"></a></center></td>
+	<td width="25%"><center><a href="../contact.html"><img border="0" src="../bg-etc/contactbutton.png" alt="Contact" title="Contact"></a></center></td>
+	<td width="25%"><center><a href="../links.html"><img border="0" src="../bg-etc/linksbutton.png" alt="Links" title="Links"></a></center></td>
+	<td width="25%"><center><a href="../LegalNotice.html"><img border="0" src="../bg-etc/legalbutton.png" alt="Legal" title="Legal"></a></center></td>
+</tr>
+</table>
+<!-- the following table element is just about the whole page! -->
+<table align="center" width="768" cellpadding="0" cellspacing="0" border="0" class="bigtable">
+<col width="80%"><!-- content -->
+<col width="20%"><!-- side navbar, if I want one -->
+<!-- but first, the top navbar. -MOVED inside content to avoid interfering with sidebar -->
+<tr class="navbar">
+<td>
+	<!--but first, the top navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="deal.html">Dealing</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="scoring.html">Scoring</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+
+</td>
+<td>
+<!-- empty cell! -->
+&nbsp;
+</td>
+</tr>
+<tr><!--one big row for the whole page, probably-->
+<!-- first column will be content if I want a navbar on the right; second if on left.
+     If I change it don't forget to change the "col" elements above! -->
+<td class="content">
+	<!-- OK, now for actual content. Can do a couple of columns with multiple TDs. -->
+	<H1>Drawing</H1>
+	<P>Drawing is guided by the player's choice of what cards to hold.
+	Since there are five cards, and each of them may either be held or
+	not held, the choice can be expressed as a 5-bit binary number called
+	Held. Assume a &ldquo;1&rdquo; bit means that a card will be held.
+	Then if bit 0 is set in Held, that means the player wants to hold
+	card 0, etc. 
+	</P>
+	<P>Since Held is 5 bits, there are 32 possible configurations. These
+	range from 00000 (no cards held) to 11111 (all cards held).</P>
+</td>
+<td class="sidebar">
+	<center>
+	<a href="index.html">
+	<img src="../images/vpokscreen-tn.jpg" alt="One Chip Video Poker" title="One Chip Video Poker">
+	<p>One Chip Video Poker Project</p>
+	</a>
+	</center>
+</td>
+</tr>
+<td class="content">
+	<H3>How Drawing Actually Works</H3>
+	<P>Given Held and a 10-card hand, it's easy to construct the new
+	hand.</P>
+	<P>Note that since card 0 is drawn leftmost, and bit 0 of binary
+	numbers are drawn rightmost, Held appears to be backwards (rightmost
+	bit corresponds to leftmost card).</P>
+	<P>The process involves a handy assembly trick I call Mask Rolling,
+	used to test bits one by one in a byte. The PIC is able to test
+	individual bits in a byte using the BTFSC / BTFSS instructions, but
+	they require that you specify which bit you're testing at compile
+	time &ndash; you can test bit 0, or bit 1, or whatever, but you can't
+	test bit X. Instead, you have to test by bitwise masking. That is, if
+	you want to test bit X in byte B, do a bitwise AND of B and a &ldquo;mask&rdquo;
+	which is a byte with only the bit of interest set. If the result is
+	zero, that bit is clear in B; if nonzero, the bit is set in B.
+	</P>
+	<OL>
+		<LI><P>Set Mask to 1 (binary 00000001). This makes it so bit zero is
+		the only one set, and card zero is the first one we'll check.</P>
+		<LI><P>Set Hand Pointer to point to the first card in the hand (card
+		0), and Draw Pointer to the first card in the draw set (card 5,
+		sixth in the 10-card hand).</P>
+		<LI><P>For each of the 5 cards:</P>
+		<OL TYPE=a>
+			<LI><P>perform a bitwise AND of Held and Mask. 
+			</P>
+			<LI><P>If the result is nonzero, that means the bit corresponding
+			to the one set bit in Mask is also a one, so the card is held. Go
+			to step (d).</P>
+			<LI><P>Otherwise, the corresponding bit is not set, so the card is
+			not held. Replace it from the draw set like this:</P>
+			<OL TYPE=i>
+				<LI><P>Copy the card pointed to by the Draw Pointer to the slot
+				pointed to by the Hand pointer.</P>
+				<LI><P>Advance the Draw Pointer to the next card in the draw set.</P>
+			</OL>
+			<LI><P>Advance the Hand Pointer to the next card in the hand.</P>
+			<LI><P>Shift Mask left one bit. So, if it had been 00000001, it's
+			now 00000010, ready to check bit 1 (corresponding to card 1).</P>
+		</OL>
+	</OL>
+</td>
+<td class="sidebar">
+	&nbsp;
+</td>
+</tr>
+<tr>
+<td class="content">
+	<P>Here's an example. Say the 10-card hand consists of ABCDEPQRST.
+	The pat hand, then, is ABCDE, and the draw set is PQRST. The Hand
+	Pointer starts out pointing at A, and the Draw Pointer at P. Assume
+	the player wants to hold cards 0 and 3 (A and D).</P>
+	<div class="stripey">
+	<table  style="text-align:center">
+	<col width="30%">
+	<col width="10%">
+	<col width="10%">
+	<col width="10%">
+	<col width="40%">
+		<tr class="header">
+			<td>
+			<p>10-card hand</p>
+			</td>
+			<td>
+			<p>Held</p>
+			</td>
+			<td>
+			<p>Mask</p>
+			</td>
+			<td>
+			<p>ANDed</p>
+			</td>
+			<td>
+			<p><b>Action</b></p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<P><B><U>A</U></B>BCDE&ndash;<B><U>P</U></B>QRST</P>
+			</td>
+			<td>
+			<p>01001</p>
+			</td>
+			<td>
+			<p>00001</p>
+			</td>
+			<td>
+			<p><B>00001</B></p>
+			</td>
+			<td>
+			<p>Card is held, so leave it alone.</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<P>A<B><U>B</U></B>CDE&ndash;<B><U>P</U></B>QRST</P>
+			</td>
+			<td>
+			<p>01001</p>
+			</td>
+			<td>
+			<p>00010</p>
+			</td>
+			<td>
+			<p><B>00000</B></p>
+			</td>
+			<td>
+			<p>Card not held; replace B with P and advance Draw Pointer.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<P>AP<B><U>C</U></B>DE&ndash;P<B><U>Q</U></B>RST</P>
+			</td>
+			<td>
+			<p>01001</p>
+			</td>
+			<td>
+			<p>00100</p>
+			</td>
+			<td>
+			<p><B>00000</B></p>
+			</td>
+			<td>
+			<p>Not held, replace C with Q and advance Draw Pointer.</p>
+			</td>
+		</tr>
+		<tr class="odd">
+			<td>
+			<P>APQ<B><U>D</U></B>E&ndash;PQ<B><U>R</U></B>ST</P>
+			</td>
+			<td>
+			<p>01001</p>
+			</td>
+			<td>
+			<p>01000</p>
+			</td>
+			<td>
+			<p><B>01000</B></p>
+			</td>
+			<td>
+			<p>Held, do nothing.</p>
+			</td>
+		</tr>
+		<tr class="even">
+			<td>
+			<P>APQD<B><U>E</U></B>&ndash;PQ<B><U>R</U></B>ST</P>
+			</td>
+			<td>
+			<p>01001</p>
+			</td>
+			<td>
+			<p>10000</p>
+			</td>
+			<td>
+			<p><B>00000</B></p>
+			</td>
+			<td>
+			<P>Not held &ndash; replace E with R. Done!</P>
+			</td>
+		</tr>
+		</table>
+	</div>
+	<P>So the final hand is <B>A P Q D R</B>.</P>
+	<P>There isn't a separate unit test for drawing; it's covered in the
+	scoring test on the next page.</P>
+</td>
+
+<!-- END OF actual content. beginning of right-hand side bar -->
+<td class="sidebar">
+	&nbsp;
+</td>
+<!-- and now the bottom navbar -->
+<tr class="navbar">
+<td>
+	<!-- and last, the bottom navbar. -->
+	<table width="100%" cellpadding="4" cellspacing="4" border="0">
+	<col width="7%">
+	<col width="24%">
+	<col width="38%">
+	<col width="24%">
+	<col width="7%">
+	<tr>
+		<td>
+		<img src="../bg-etc/handprev-khaki.png">
+		</td>
+		<td style="text-align: left">
+		<a href="deal.html">Dealing</a>
+		</td>
+		<td>
+		&nbsp;
+		</td>
+		<td style="text-align: right">
+		<a href="scoring.html">Scoring</a>
+		</td>
+		<td>
+		<img src="../bg-etc/handnext-khaki.png">
+		</td>
+	</tr>
+	</table>	
+</td>
+<td>
+	<!-- page-top link -->
+	<img src="../bg-etc/handup-khaki.png"><a href="#top">Page Top</a>
+</td>
+</tr>
+<!--the following end-table ends the contents of the whole page! -->
+</table>
+<!-- pixeldecor acknowledgement for pages that use her patterns
+<center>
+<span style="color:white"><b>backgrounds by</b></span><br>
+<a href="http://www.pixeldecor.com"><img src="../bg-etc/pdecor.gif" border="0"></a>
+</center>
+-->
+</body>
+</html>

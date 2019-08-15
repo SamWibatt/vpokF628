@@ -1,0 +1,4 @@
+# ignore compiled files in top directory only (keep the one in website)
+/*.HEX
+/*.hex
+# add other stuff when I find out what the MPLABX byproducts are

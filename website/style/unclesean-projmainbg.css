@@ -1,0 +1,175 @@
+/* 
+   style sheet for Uncle Sean's Electronix Fun Page, the new 
+   nice-looking version.
+   
+   PROJECT MAIN PAGE VERSION!
+   
+   Some of the background images require permission from 
+   Jen Segrest at http://www.Pixeldecor.com. Don't use them without
+   asking her!
+   
+   OK, trying out the colors I got from the color calculator at
+   http://traumwind.de/blog/trw_colormatch.html
+   to see if I can come up with a decent palette.
+*/
+
+
+/* ELEMENTS --------------------------------------------------------- */
+
+body {
+	color: #000000;
+	background-color : #485C95;
+	background-image: url('../bg-etc/nimrod-5.gif'); 
+	background-repeat: repeat;
+	background-position: top left;
+	margin:10px 0px 0px 0px;
+	font-family: verdana, arial, sans-serif;
+	font-size: 14px;	
+	line-height: 150%;		
+	}
+
+/*
+td {
+	vertical-align: top;
+	}			
+*/	
+/* CLASSES ---------------------------------------------------------- */
+
+/* the STRIPEY class is for the tables with the alternating bars
+   of white and light grey.
+   Use like this to make a stripey table with a narrow column and
+   a wide column, which I do a lot:
+
+	<div class="stripey">
+	<table>
+	<col width="15%">
+	<col width="85%">
+		<tr class="even">
+			<td>Row 0 Column 0</td>
+			<td>Row 0 Column 1</td>
+		</tr>
+		<tr class="odd">
+			<td>Row 1 Column 0</td>
+			<td>Row 1 Column 1</td>
+		</tr>
+	</table>
+	</div>
+*/
+
+.stripey table {
+	width: 100%;
+	border-collapse: separate;
+	border: outset 2pt;
+	border-spacing: 2pt;
+	margin: 8px;
+	}
+.stripey tr.header {
+	background-color: #B0B0B0;
+	text-decoration: bold;
+	}
+.stripey tr.odd {
+	background-color: #D0D0D0
+	}
+.stripey tr.even {
+	background-color: #FFFFFF
+	}
+.stripey td {
+	vertical-align: top;
+	border: 1px solid black;
+	padding: 8px;
+	line-height: 150%;
+	}
+.stripey td.strthumb {
+	text-align: center;
+	}
+.stripey img.strthumb {
+	border: solid 3px;
+	}
+
+
+
+
+/*
+.main {
+        background-color: #FFFFFF;
+		background-image: url(squiggle-lime.gif);
+		background-repeat: repeat-y;
+		width: 507px;
+		}
+*/
+
+.bigtable {
+		border: outset 5px;
+   		background-color: #E4E4E4; /*#949494;*/ /* #FFFFFF; */
+		margin-bottom: 0px;
+		padding: 8px;
+/*		font-family: 'Times New Roman',serif; */
+		font-family: verdana, arial, sans-serif;
+		font-size: 12pt;
+		line-height: 150%;		
+	}
+	
+.bigtable td.content {
+/*	border-top: groove;  having border on top & bottom of navbar removes need for this */
+	border-right: groove;
+	padding-top: 12px;
+	padding-bottom: 12px;
+	padding-right: 8px;
+	line-height: 150%;		
+	background-color: #E4E4E4; /*#949494;*/ /* #FFFFFF; */
+	color: black;	/* #6B6B6B; */
+	}
+	
+.bigtable td.sidebar {
+/*	border-top: groove;  yeah, I like the border to be on the navbar and not break up the sidebar. */
+	vertical-align: top;
+	padding-top: 8px;
+	padding-bottom: 8px;
+	padding-left: 4px;
+	padding-right: 4px;
+	background-color: #BAAB5F; /* #6B6316; */ 			/* darkened #514C11; */
+	color: #5C5614; /* #6B6316; */ /* #B8A927; */
+	background-image: url('../bg-etc/chunky-projmain.gif');  
+	background-repeat: repeat; 
+	font-family: verdana, arial, sans-serif;
+	font-size: 12px;	
+	line-height: 150%;		
+	}
+	
+.navbar {
+/*	border-top: solid white; testing putting navbar table in content column
+	border-bottom: solid white; */
+	background-color: #BAAB5F; /* #6B6316; */ 			/* darkened #514C11; */
+	color: #5C5614; /* #6B6316; */ /* #B8A927; */
+/*	background-color: #6D4B69; */
+	padding: 8px;
+	font-family: verdana, arial, sans-serif;
+	font-size: 14px;	
+	background-image: url('../bg-etc/chunky-projmain.gif');  
+	background-repeat: repeat; 
+	vertical-align: middle;
+	}
+	
+.navbar td	{ 
+	vertical-align: middle;
+	text-align: center; 
+/*	line-height: 150%;		*/
+	}
+	
+/* #6B6316 is hand color 
+   #5C5614 a pinch darker
+   #c0c0c0 was link and A color
+   visited was e0e020 on project subpage
+*/
+
+.navbar A 			{ color: #606060; text-decoration: none; font-weight: normal;}
+.navbar A:link		{ color: #606060; text-decoration: none; font-weight: normal;}
+.navbar A:visited	{ color: black; text-decoration: none; font-weight: normal;}
+.navbar A:active	{ color: #F0F040; text-decoration: none; font-weight: normal;}
+.navbar A:hover		{ color: white; text-decoration: underline; font-weight: normal;}
+	
+.sidebar A 			{ color: #606060; text-decoration: none; font-weight: normal;}
+.sidebar A:link		{ color: #606060; text-decoration: none; font-weight: normal;}
+.sidebar A:visited	{ color: black; text-decoration: none; font-weight: normal;}
+.sidebar A:active	{ color: #F0F040; text-decoration: none; font-weight: normal;}
+.sidebar A:hover		{ color: white; text-decoration: underline; font-weight: normal;}
