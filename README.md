@@ -22,3 +22,4 @@ And indeed yes - the secret is to end-run the linker and build like it was done 
 
 I was able to build this project by importing the old mcp/mcw project files (File | Import | MPLAB v8 IDE), choosing device family of PIC mid-range, device 16F628 (should probably bump to A.)
  
+**NEXT UP: BUILD THE CIRCUIT, BURN THE CHIP, PLAY THE GAME**
