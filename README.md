@@ -15,3 +15,10 @@ This is mostly of historical interest, but...
 16F628s are still available as of this writing on 8/15/2019 and I believe the original assembly should work with the newest MPLABX and PicKit3, which I have lying around. 
 
 **We will see!**
+
+And indeed yes - the secret is to end-run the linker and build like it was done in the old days - "Build in Absolute Mode" in MPASM global settings in Project Properties:
+
+![Build in Absolute Mode is an Absolute Must!](website/BuildAbsolute.png)
+
+I was able to build this project by importing the old mcp/mcw project files (File | Import | MPLAB v8 IDE), choosing device family of PIC mid-range, device 16F628 (should probably bump to A.)
+ 
