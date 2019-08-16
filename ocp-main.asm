@@ -45,7 +45,7 @@
 ;14-----D7 ---------Data bit 7------------RA3 pin 2
 
 	LIST	p=16F628				;tell assembler what chip we are using
-	include "P16F628.inc"			;include the defaults for the chip
+	include "p16f628.inc"			;include the defaults for the chip - CASE SENSITIVE! windows argh
 	ERRORLEVEL	0,	-302			;suppress bank selection messages
 	__config 0x3D18					;sets the configuration settings (oscillator type etc.)
 

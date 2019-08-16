@@ -32,7 +32,10 @@ scorectr
 	retlw	4							;|    Royal Flush     | col 4
 
 	; HANDY ERROR BLOCK FOR CHECKING IF TABLES OOZE OVER PAGES. Don't need for "long"-access tables like scoredata thing.
-	if ((High $) != (High scorectr)) 
+	; doesn't seem to work in mplab x idea v5.25 - I will try finding out how to do this (make an issue!)
+	; FIX IS TO BUILD IN ABSOLUTE MODE, do right click project, get Properties, go to the MPASM (Global Options)
+	; settings, check Build in Absolute mode.
+	if ((high $) != (high scorectr))
 	error "scorectr wraps a page!"
 	endif
 
