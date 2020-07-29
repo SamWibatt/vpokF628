@@ -1,3 +1,5 @@
+# MIGRATING FROM GITHUB TO GITLAB AT https://gitlab.com/SamWibatt/vpokF628 - go to that repository unless you're already there
+
 # vpokF628
 
 ## "One Chip Video Poker"
